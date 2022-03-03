@@ -2,26 +2,40 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++17
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    defaultsetting.cpp \
+    dicewindow.cpp \
     main.cpp \
     mainwindow.cpp \
     player.cpp \
-    screen.cpp
+    pushbuttoncorner.cpp \
+    resetdialog.cpp \
+    screen.cpp \
+    settingswindow.cpp
 
 HEADERS += \
+    Define.h \
+    defaultsetting.h \
+    dicewindow.h \
     mainwindow.h \
     player.h \
-    screen.h
+    pushbuttoncorner.h \
+    resetdialog.h \
+    screen.h \
+    settingswindow.h
 
 FORMS += \
+    dicewindow.ui \
     mainwindow.ui \
-    screen.ui
+    resetdialog.ui \
+    screen.ui \
+    settingswindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

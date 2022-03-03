@@ -36,7 +36,7 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::on_pushButton_clicked(){
+void MainWindow::on_pushButton_clicked(){ 
     s.resize(width(),height());
     s.move(x(),y());
 
@@ -83,8 +83,10 @@ void MainWindow::timerEvent(QTimerEvent *te){
 
 void MainWindow::maximizeFontSize(QObject* object){
     if(dynamic_cast<QPushButton*>(object)){
+        ((QPushButton*)(object))->setMinimumSize(1,1);
         maximizeFontSizeTemplate((QPushButton*)object);
     }else if(dynamic_cast<QLabel*>(object)){
+        ((QLabel*)(object))->setMinimumSize(1,1);
         maximizeFontSizeTemplate((QLabel*)object);
     }
 }

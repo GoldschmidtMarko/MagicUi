@@ -14,7 +14,6 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -30,9 +29,8 @@ public:
     QPushButton *buttonEdit;
     QVBoxLayout *verticalLayout_2;
     QPushButton *buttonReset;
-    QSpacerItem *verticalSpacer;
     QPushButton *buttonSetting;
-    QSpacerItem *verticalSpacer_2;
+    QHBoxLayout *horizontalLayout_2;
     QPushButton *buttonDice;
     QHBoxLayout *layoutPlayers;
 
@@ -41,7 +39,7 @@ public:
         if (Screen->objectName().isEmpty())
             Screen->setObjectName(QString::fromUtf8("Screen"));
         Screen->resize(895, 569);
-        Screen->setStyleSheet(QString::fromUtf8("background-color:Green;"));
+        Screen->setStyleSheet(QString::fromUtf8("background-color: rgb(35,39,42);"));
         verticalLayout = new QVBoxLayout(Screen);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         horizontalLayout = new QHBoxLayout();
@@ -67,6 +65,8 @@ public:
 
         verticalLayout_3->addWidget(buttonEdit);
 
+        verticalLayout_3->setStretch(0, 1);
+        verticalLayout_3->setStretch(1, 1);
 
         horizontalLayout->addLayout(verticalLayout_3);
 
@@ -80,10 +80,6 @@ public:
 
         verticalLayout_2->addWidget(buttonReset);
 
-        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        verticalLayout_2->addItem(verticalSpacer);
-
         buttonSetting = new QPushButton(Screen);
         buttonSetting->setObjectName(QString::fromUtf8("buttonSetting"));
         sizePolicy.setHeightForWidth(buttonSetting->sizePolicy().hasHeightForWidth());
@@ -92,21 +88,28 @@ public:
 
         verticalLayout_2->addWidget(buttonSetting);
 
-        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        verticalLayout_2->addItem(verticalSpacer_2);
-
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         buttonDice = new QPushButton(Screen);
         buttonDice->setObjectName(QString::fromUtf8("buttonDice"));
         sizePolicy.setHeightForWidth(buttonDice->sizePolicy().hasHeightForWidth());
         buttonDice->setSizePolicy(sizePolicy);
         buttonDice->setStyleSheet(QString::fromUtf8("background-color:White;"));
 
-        verticalLayout_2->addWidget(buttonDice);
+        horizontalLayout_2->addWidget(buttonDice);
 
+        horizontalLayout_2->setStretch(0, 3);
+
+        verticalLayout_2->addLayout(horizontalLayout_2);
+
+        verticalLayout_2->setStretch(0, 1);
+        verticalLayout_2->setStretch(1, 1);
+        verticalLayout_2->setStretch(2, 1);
 
         horizontalLayout->addLayout(verticalLayout_2);
 
+        horizontalLayout->setStretch(0, 3);
+        horizontalLayout->setStretch(1, 1);
 
         verticalLayout->addLayout(horizontalLayout);
 
@@ -115,6 +118,8 @@ public:
 
         verticalLayout->addLayout(layoutPlayers);
 
+        verticalLayout->setStretch(0, 1);
+        verticalLayout->setStretch(1, 6);
 
         retranslateUi(Screen);
 

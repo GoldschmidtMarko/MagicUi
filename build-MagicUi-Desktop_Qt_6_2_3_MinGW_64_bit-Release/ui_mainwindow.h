@@ -37,7 +37,7 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(800, 600);
-        MainWindow->setStyleSheet(QString::fromUtf8("background-color:Green;"));
+        MainWindow->setStyleSheet(QString::fromUtf8("background-color: rgb(35,39,42);"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         verticalLayout = new QVBoxLayout(centralwidget);

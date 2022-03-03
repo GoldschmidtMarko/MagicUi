@@ -1,0 +1,14 @@
+release/defaultsetting.o
+release/dicewindow.o
+release/main.o
+release/mainwindow.o
+release/player.o
+release/pushbuttoncorner.o
+release/resetdialog.o
+release/screen.o
+release/settingswindow.o
+release/moc_dicewindow.o
+release/moc_mainwindow.o
+release/moc_resetdialog.o
+release/moc_screen.o
+release/moc_settingswindow.o

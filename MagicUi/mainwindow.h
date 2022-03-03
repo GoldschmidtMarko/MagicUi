@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QFontMetrics>
 #include <iostream>
+#include <QMouseEvent>
 #include <QScreen>
 
 #include "screen.h"

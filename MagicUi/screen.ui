@@ -14,7 +14,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:Green;</string>
+   <string notr="true">background-color: rgb(35,39,42);</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,6">
    <item>
@@ -90,20 +90,24 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="buttonDice">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color:White;</string>
-         </property>
-         <property name="text">
-          <string>Dice</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="3">
+         <item>
+          <widget class="QPushButton" name="buttonDice">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color:White;</string>
+           </property>
+           <property name="text">
+            <string>Dice</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </item>
