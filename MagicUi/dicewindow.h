@@ -21,10 +21,11 @@ public:
     explicit DiceWindow(QWidget *parent = nullptr);
     ~DiceWindow();
     void dice(int amountPlayer);
+    int maxValue = 6;
 
 private:
     Ui::DiceWindow *ui;
-    int maxValue = 6;
+
     int timerId = 0;
 
     void maximizeFontSize(QObject* object);

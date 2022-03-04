@@ -27,16 +27,22 @@ public:
     QLabel *label;
     QHBoxLayout *buttonLayout;
     QVBoxLayout *verticalLayout_2;
+    QVBoxLayout *verticalLayout_7;
     QPushButton *addPlayer;
+    QLineEdit *lineAdd;
+    QVBoxLayout *verticalLayout_8;
     QPushButton *removePlayer;
+    QLineEdit *lineRemove;
     QVBoxLayout *verticalLayout_3;
     QPushButton *commanderDamage;
     QPushButton *infectDamage;
     QVBoxLayout *verticalLayout_4;
     QVBoxLayout *verticalLayout_5;
-    QPushButton *diceValue;
-    QLineEdit *lineEdit;
-    QLabel *label_2;
+    QPushButton *dicebutton;
+    QLineEdit *lineDice;
+    QVBoxLayout *verticalLayout_6;
+    QPushButton *initialHP;
+    QLineEdit *lineHP;
 
     void setupUi(QWidget *Settingswindow)
     {
@@ -56,6 +62,8 @@ public:
         buttonLayout->setObjectName(QString::fromUtf8("buttonLayout"));
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        verticalLayout_7 = new QVBoxLayout();
+        verticalLayout_7->setObjectName(QString::fromUtf8("verticalLayout_7"));
         addPlayer = new QPushButton(Settingswindow);
         addPlayer->setObjectName(QString::fromUtf8("addPlayer"));
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
@@ -65,16 +73,46 @@ public:
         addPlayer->setSizePolicy(sizePolicy);
         addPlayer->setStyleSheet(QString::fromUtf8("background-color:White;"));
 
-        verticalLayout_2->addWidget(addPlayer);
+        verticalLayout_7->addWidget(addPlayer);
 
+        lineAdd = new QLineEdit(Settingswindow);
+        lineAdd->setObjectName(QString::fromUtf8("lineAdd"));
+        sizePolicy.setHeightForWidth(lineAdd->sizePolicy().hasHeightForWidth());
+        lineAdd->setSizePolicy(sizePolicy);
+        lineAdd->setStyleSheet(QString::fromUtf8("background-color:White;"));
+
+        verticalLayout_7->addWidget(lineAdd);
+
+        verticalLayout_7->setStretch(0, 2);
+        verticalLayout_7->setStretch(1, 1);
+
+        verticalLayout_2->addLayout(verticalLayout_7);
+
+        verticalLayout_8 = new QVBoxLayout();
+        verticalLayout_8->setObjectName(QString::fromUtf8("verticalLayout_8"));
         removePlayer = new QPushButton(Settingswindow);
         removePlayer->setObjectName(QString::fromUtf8("removePlayer"));
         sizePolicy.setHeightForWidth(removePlayer->sizePolicy().hasHeightForWidth());
         removePlayer->setSizePolicy(sizePolicy);
         removePlayer->setStyleSheet(QString::fromUtf8("background-color:White;"));
 
-        verticalLayout_2->addWidget(removePlayer);
+        verticalLayout_8->addWidget(removePlayer);
 
+        lineRemove = new QLineEdit(Settingswindow);
+        lineRemove->setObjectName(QString::fromUtf8("lineRemove"));
+        sizePolicy.setHeightForWidth(lineRemove->sizePolicy().hasHeightForWidth());
+        lineRemove->setSizePolicy(sizePolicy);
+        lineRemove->setStyleSheet(QString::fromUtf8("background-color:White;"));
+
+        verticalLayout_8->addWidget(lineRemove);
+
+        verticalLayout_8->setStretch(0, 2);
+        verticalLayout_8->setStretch(1, 1);
+
+        verticalLayout_2->addLayout(verticalLayout_8);
+
+        verticalLayout_2->setStretch(0, 1);
+        verticalLayout_2->setStretch(1, 1);
 
         buttonLayout->addLayout(verticalLayout_2);
 
@@ -103,34 +141,49 @@ public:
         verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
         verticalLayout_5 = new QVBoxLayout();
         verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
-        diceValue = new QPushButton(Settingswindow);
-        diceValue->setObjectName(QString::fromUtf8("diceValue"));
-        sizePolicy.setHeightForWidth(diceValue->sizePolicy().hasHeightForWidth());
-        diceValue->setSizePolicy(sizePolicy);
-        diceValue->setStyleSheet(QString::fromUtf8("background-color:White;"));
+        dicebutton = new QPushButton(Settingswindow);
+        dicebutton->setObjectName(QString::fromUtf8("dicebutton"));
+        sizePolicy.setHeightForWidth(dicebutton->sizePolicy().hasHeightForWidth());
+        dicebutton->setSizePolicy(sizePolicy);
+        dicebutton->setStyleSheet(QString::fromUtf8("background-color:White;"));
 
-        verticalLayout_5->addWidget(diceValue);
+        verticalLayout_5->addWidget(dicebutton);
 
-        lineEdit = new QLineEdit(Settingswindow);
-        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
-        sizePolicy.setHeightForWidth(lineEdit->sizePolicy().hasHeightForWidth());
-        lineEdit->setSizePolicy(sizePolicy);
-        lineEdit->setStyleSheet(QString::fromUtf8("background-color:White;"));
+        lineDice = new QLineEdit(Settingswindow);
+        lineDice->setObjectName(QString::fromUtf8("lineDice"));
+        sizePolicy.setHeightForWidth(lineDice->sizePolicy().hasHeightForWidth());
+        lineDice->setSizePolicy(sizePolicy);
+        lineDice->setStyleSheet(QString::fromUtf8("background-color:White;"));
 
-        verticalLayout_5->addWidget(lineEdit);
+        verticalLayout_5->addWidget(lineDice);
 
         verticalLayout_5->setStretch(0, 2);
         verticalLayout_5->setStretch(1, 1);
 
         verticalLayout_4->addLayout(verticalLayout_5);
 
-        label_2 = new QLabel(Settingswindow);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-        sizePolicy.setHeightForWidth(label_2->sizePolicy().hasHeightForWidth());
-        label_2->setSizePolicy(sizePolicy);
-        label_2->setAlignment(Qt::AlignCenter);
+        verticalLayout_6 = new QVBoxLayout();
+        verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
+        initialHP = new QPushButton(Settingswindow);
+        initialHP->setObjectName(QString::fromUtf8("initialHP"));
+        sizePolicy.setHeightForWidth(initialHP->sizePolicy().hasHeightForWidth());
+        initialHP->setSizePolicy(sizePolicy);
+        initialHP->setStyleSheet(QString::fromUtf8("background-color:White;"));
 
-        verticalLayout_4->addWidget(label_2);
+        verticalLayout_6->addWidget(initialHP);
+
+        lineHP = new QLineEdit(Settingswindow);
+        lineHP->setObjectName(QString::fromUtf8("lineHP"));
+        sizePolicy.setHeightForWidth(lineHP->sizePolicy().hasHeightForWidth());
+        lineHP->setSizePolicy(sizePolicy);
+        lineHP->setStyleSheet(QString::fromUtf8("background-color:White;"));
+
+        verticalLayout_6->addWidget(lineHP);
+
+        verticalLayout_6->setStretch(0, 2);
+        verticalLayout_6->setStretch(1, 1);
+
+        verticalLayout_4->addLayout(verticalLayout_6);
 
         verticalLayout_4->setStretch(0, 1);
         verticalLayout_4->setStretch(1, 1);
@@ -159,8 +212,8 @@ public:
         removePlayer->setText(QCoreApplication::translate("Settingswindow", "Remove Player", nullptr));
         commanderDamage->setText(QCoreApplication::translate("Settingswindow", "Commander Damage", nullptr));
         infectDamage->setText(QCoreApplication::translate("Settingswindow", "Infect Damage", nullptr));
-        diceValue->setText(QCoreApplication::translate("Settingswindow", "Dice Value", nullptr));
-        label_2->setText(QCoreApplication::translate("Settingswindow", "TextLabel", nullptr));
+        dicebutton->setText(QCoreApplication::translate("Settingswindow", "Dice Value: ", nullptr));
+        initialHP->setText(QCoreApplication::translate("Settingswindow", "Initial HP:", nullptr));
     } // retranslateUi
 
 };

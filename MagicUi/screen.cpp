@@ -15,7 +15,11 @@ Screen::Screen(QWidget *parent) :
 
     settingsWindow = new Settingswindow();
 
+    editwindow = new Editwindow();
+
     setupSettingWindow();
+
+    setupEditWindow();
 
     QPushButton* yesPushButton = resetDialog->findChild<QPushButton*>(QString::fromStdString("pushButtonYes"));
 
@@ -25,12 +29,12 @@ Screen::Screen(QWidget *parent) :
     });
 
 
-    QScreen *screen = QGuiApplication::primaryScreen();
-    QRect screenGeometry = screen->geometry();
-    int height = screenGeometry.height();
-    int width = screenGeometry.width();
+    //QScreen *screen = QGuiApplication::primaryScreen();
+    //QRect screenGeometry = screen->geometry();
+    //int height = screenGeometry.height();
+    //int width = screenGeometry.width();
     setMinimumSize(1,1);
-    setMaximumSize(width,height);
+    //setMaximumSize(width,height);
 
 
     auto childs = children();
@@ -61,6 +65,97 @@ Screen::~Screen(){
     }
 }
 
+void Screen::setupEditWindow(){
+    QRadioButton* radioBackground = editwindow->findChild<QRadioButton*>(QString::fromStdString("radioBackground"));
+    radioBackground->setChecked(true);
+
+    QPushButton* rerollButton = editwindow->findChild<QPushButton*>(QString::fromStdString("rerollButton"));
+    connect(rerollButton, &QPushButton::clicked, [this]() {
+        editwindow->generateColors();
+    });
+
+    QPushButton* applyButton = editwindow->findChild<QPushButton*>(QString::fromStdString("applyButton"));
+    connect(applyButton, &QPushButton::clicked, [this]() {
+        QLabel* displayColor = editwindow->findChild<QLabel*>(QString::fromStdString("displayColor"));
+        std::string background =  displayColor->palette().button().color().name().toStdString();
+        std::string font = displayColor->palette().text().color().name().toStdString();
+        background.erase(0,1);
+        font.erase(0,1);
+        int r_b, g_b, b_b;
+        int r_f, g_f, b_f;
+        std::sscanf(background.c_str(), "%02x%02x%02x", &r_b, &g_b, &b_b);
+        std::sscanf(font.c_str(), "%02x%02x%02x", &r_f, &g_f, &b_f);
+        for(auto it : editwindow->vecPlayers){
+            it->r_back = r_b;
+            it->r_font = r_f;
+            it->g_back = g_b;
+            it->g_font = g_f;
+            it->b_back = b_b;
+            it->b_font = b_f;
+        }
+        editwindow->vecPlayers.clear();
+        buttonsPressed.clear();
+        refreshUi();
+        editwindow->close();
+
+
+    });
+
+    QSlider* sliderR = editwindow->findChild<QSlider*>(QString::fromStdString("sliderR"));
+    connect(sliderR, &QSlider::sliderMoved, [=]() {
+        QLabel* displayColor = editwindow->findChild<QLabel*>(QString::fromStdString("displayColor"));
+        std::string background =  "background-color: " + displayColor->palette().button().color().name().toStdString();
+        std::string font = "color: " + displayColor->palette().text().color().name().toStdString();
+
+        QSlider* sliderG = editwindow->findChild<QSlider*>(QString::fromStdString("sliderG"));
+        QSlider* sliderB = editwindow->findChild<QSlider*>(QString::fromStdString("sliderB"));
+
+        QRadioButton* radioBackground = editwindow->findChild<QRadioButton*>(QString::fromStdString("radioBackground"));
+        if(radioBackground->isChecked()){
+            background = "background-color: rgb(" + std::to_string(sliderR->sliderPosition()) + "," + std::to_string(sliderG->sliderPosition()) + "," + std::to_string(sliderB->sliderPosition())  + ");";
+        }else{
+            font = "color: rgb(" + std::to_string(sliderR->sliderPosition()) + "," + std::to_string(sliderG->sliderPosition()) + "," + std::to_string(sliderB->sliderPosition())  + ");";
+        }
+        displayColor->setStyleSheet(QString::fromStdString(background + ";" + font));
+    });
+
+    QSlider* sliderG = editwindow->findChild<QSlider*>(QString::fromStdString("sliderG"));
+    connect(sliderG, &QSlider::sliderMoved, [=]() {
+        QLabel* displayColor = editwindow->findChild<QLabel*>(QString::fromStdString("displayColor"));
+        std::string background =  "background-color: " + displayColor->palette().button().color().name().toStdString();
+        std::string font = "color: " + displayColor->palette().text().color().name().toStdString();
+
+        QSlider* sliderR = editwindow->findChild<QSlider*>(QString::fromStdString("sliderR"));
+        QSlider* sliderB = editwindow->findChild<QSlider*>(QString::fromStdString("sliderB"));
+
+        QRadioButton* radioBackground = editwindow->findChild<QRadioButton*>(QString::fromStdString("radioBackground"));
+        if(radioBackground->isChecked()){
+            background = "background-color: rgb(" + std::to_string(sliderR->sliderPosition()) + "," + std::to_string(sliderG->sliderPosition()) + "," + std::to_string(sliderB->sliderPosition())  + ");";
+        }else{
+            font = "color: rgb(" + std::to_string(sliderR->sliderPosition()) + "," + std::to_string(sliderG->sliderPosition()) + "," + std::to_string(sliderB->sliderPosition())  + ");";
+        }
+        displayColor->setStyleSheet(QString::fromStdString(background + ";" + font));
+    });
+
+    QSlider* sliderB = editwindow->findChild<QSlider*>(QString::fromStdString("sliderB"));
+    connect(sliderB, &QSlider::sliderMoved, [=]() {
+        QLabel* displayColor = editwindow->findChild<QLabel*>(QString::fromStdString("displayColor"));
+        std::string background =  "background-color: " + displayColor->palette().button().color().name().toStdString();
+        std::string font = "color: " + displayColor->palette().text().color().name().toStdString();
+
+        QSlider* sliderG = editwindow->findChild<QSlider*>(QString::fromStdString("sliderG"));
+        QSlider* sliderR = editwindow->findChild<QSlider*>(QString::fromStdString("sliderR"));
+
+        QRadioButton* radioBackground = editwindow->findChild<QRadioButton*>(QString::fromStdString("radioBackground"));
+        if(radioBackground->isChecked()){
+            background = "background-color: rgb(" + std::to_string(sliderR->sliderPosition()) + "," + std::to_string(sliderG->sliderPosition()) + "," + std::to_string(sliderB->sliderPosition())  + ");";
+        }else{
+            font = "color: rgb(" + std::to_string(sliderR->sliderPosition()) + "," + std::to_string(sliderG->sliderPosition()) + "," + std::to_string(sliderB->sliderPosition())  + ");";
+        }
+        displayColor->setStyleSheet(QString::fromStdString(background + ";" + font));
+    });
+}
+
 void Screen::setupSettingWindow(){
     QPushButton* commanderDamage = settingsWindow->findChild<QPushButton*>(QString::fromStdString("commanderDamage"));
 
@@ -89,10 +184,90 @@ void Screen::setupSettingWindow(){
         refreshUi();
     });
 
-    QPushButton* diceValue = settingsWindow->findChild<QPushButton*>(QString::fromStdString("diceValue"));
-    connect(infectDamage, &QPushButton::clicked, [=]() {
-
+    QPushButton* dicebutton = settingsWindow->findChild<QPushButton*>(QString::fromStdString("dicebutton"));
+    connect(dicebutton, &QPushButton::clicked, [=]() {
+        QLineEdit* lineDice = settingsWindow->findChild<QLineEdit*>(QString::fromStdString("lineDice"));
+        int newValue = diceWindow->maxValue;
+        if(lineDice->text().toInt() > 0){
+            newValue = lineDice->text().toInt();
+        }
+        diceWindow->maxValue = newValue;
+        dicebutton->setText(QString::fromStdString("Dice Value: " + std::to_string(diceWindow->maxValue)));
+        lineDice->setText("");
     });
+
+
+    QPushButton* initialHP = settingsWindow->findChild<QPushButton*>(QString::fromStdString("initialHP"));
+    connect(initialHP, &QPushButton::clicked, [=]() {
+        QLineEdit* lineHP = settingsWindow->findChild<QLineEdit*>(QString::fromStdString("lineHP"));
+        int newValue = defaultSetting->initialHp;
+        if(lineHP->text().toInt() > 0){
+            newValue = lineHP->text().toInt();
+        }
+        defaultSetting->initialHp = newValue;
+        initialHP->setText(QString::fromStdString("Initial HP: " + std::to_string(defaultSetting->initialHp)));
+        lineHP->setText("");
+    });
+
+    QPushButton* addPlayer = settingsWindow->findChild<QPushButton*>(QString::fromStdString("addPlayer"));
+    connect(addPlayer, &QPushButton::clicked, [this]() {
+        QLineEdit* lineAdd = settingsWindow->findChild<QLineEdit*>(QString::fromStdString("lineAdd"));
+        std::string newName = lineAdd->text().toStdString();
+        if(newName.size() > 0){
+            for(auto it : vecPlayers){
+                if(it->name == newName){
+                    lineAdd->setText("Error");
+                    return;
+                }
+            }
+            Player* p = new Player(newName);
+            vecPlayers.push_back(p);
+            refreshPlayerCommander();
+            refreshUi();
+            lineAdd->setText("");
+        }
+    });
+
+    QPushButton* removePlayer = settingsWindow->findChild<QPushButton*>(QString::fromStdString("removePlayer"));
+    connect(removePlayer, &QPushButton::clicked, [this]() {
+        QLineEdit* lineRemove = settingsWindow->findChild<QLineEdit*>(QString::fromStdString("lineRemove"));
+        std::string deletingName = lineRemove->text().toStdString();
+        if(deletingName.size() > 0){
+            for(int i = 0; i < (int)vecPlayers.size();++i){
+                if(vecPlayers.at(i)->name == deletingName){
+                    delete(vecPlayers.at(i));
+                    vecPlayers.erase(vecPlayers.begin() + i);
+
+                    QVBoxLayout* layout = this->findChild<QVBoxLayout*>(QString::fromStdString("layout" + deletingName));
+                    if(layout != nullptr){
+                        QLayoutItem* item;
+                        while( (item = layout->takeAt(0)) != nullptr ){
+                            delete item->widget();
+                            delete item;
+                        }
+                        delete layout;
+                    }
+
+                    for(int j = 0; j < (int)buttonsPressed.size();++j){
+                        if(buttonsPressed.at(j) == i){
+                            buttonsPressed.erase(buttonsPressed.begin() + j);
+                        }
+                    }
+
+                    refreshPlayerCommander();
+                    refreshUi();
+
+                    lineRemove->setText("");
+
+                    return;
+                }
+            }
+            lineRemove->setText("Error");
+        }
+    });
+
+
+
 }
 
 void Screen::resizeEvent(QResizeEvent* event){
@@ -152,6 +327,13 @@ void Screen::refreshUiPlayer(Player* p){
     QPushButton* playerName = new QPushButton(this);
     playerName->setObjectName(QString::fromStdString("button_" + p->name));
     playerName->setStyleSheet(QString::fromStdString(p->getBackgroundColor()));
+    for(auto it : buttonsPressed){
+        if(vecPlayers.at(it)->name == p->name){
+            playerName->setStyleSheet(COLOR_LIGHTBLUE);
+            break;
+        }
+    }
+
 
     connect(playerName, &QPushButton::clicked, [=]() {
         int index = -1;
@@ -191,10 +373,17 @@ void Screen::refreshUiPlayer(Player* p){
 
 
     if(defaultSetting->commanderDamage == true){
+        QLabel* titel = new QLabel(this);
+        titel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        titel->setText(QString::fromStdString("CommanderDamage"));
+        titel->setStyleSheet(QString::fromStdString(p->getBackgroundColor()));
+        titel->setAlignment(Qt::AlignCenter);
+        layout->addWidget(titel);
+
         for(auto it : p->vecPlayerCommander){
             QPushButton* playerCommanderDamage = new PushButtonCorner(this,p,ButtonType::commanderDamage,it->playerName);
             playerCommanderDamage->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-            playerCommanderDamage->setText(QString::fromStdString("C_" + it->playerName + ": " + std::to_string(it->damage)));
+            playerCommanderDamage->setText(QString::fromStdString(it->playerName + ": " + std::to_string(it->damage)));
             playerCommanderDamage->setStyleSheet(QString::fromStdString(p->getBackgroundColor()));
             layout->addWidget(playerCommanderDamage);
         }
@@ -276,25 +465,59 @@ Player* Screen::getPlayerByName(std::string name){
 }
 
 void Screen::on_buttonEdit_clicked(){
-    for(int i = 0;i < 5;++i){
-        Player* p = new Player("Gero" + std::to_string(i));
-        p->hp = 20;
-        p->infectdamage = 2;
-        vecPlayers.push_back(p);
+    double factor = double(6)/8;
+
+    editwindow->resize(width() * factor, height() * factor);
+    editwindow->move(x() + (width() - editwindow->width())/2 ,y() + (height() - editwindow->height())/2 );
+    editwindow->setMaximumSize(width(),height());
+    editwindow->generateColors();
+    for(auto it : buttonsPressed){
+        editwindow->vecPlayers.push_back(vecPlayers.at(it));
     }
-    for(int i = 0;i < 4;++i){
-        vecPlayers.at(i)->addCommanderDamage("Gero" + std::to_string(i+1),3);
+
+    editwindow->show();
+
+}
+
+void Screen::refreshPlayerCommander(){
+    for(auto it : vecPlayers){
+        for(auto it2 : vecPlayers){
+            if(it->name != it2->name){
+                bool contains = false;
+                for(auto it3 : it2->vecPlayerCommander){
+                    if(it3->playerName == it->name){
+                        contains = true;
+                        break;
+                    }
+                }
+                if(!contains){
+                    PlayerCommander* p = new PlayerCommander();
+                    p->playerName = it->name;
+                    it2->vecPlayerCommander.push_back(p);
+                }
+            }
+        }
     }
-
-
-
-    refreshUi();
+    for(auto it : vecPlayers){
+        for(int i = 0; i < (int)it->vecPlayerCommander.size();++i){
+            bool valid = false;
+            for(auto it3 : vecPlayers){
+                if(it->vecPlayerCommander.at(i)->playerName == it3->name){
+                    valid = true;
+                }
+            }
+            if(valid == false) {
+                delete(it->vecPlayerCommander.at(i));
+                it->vecPlayerCommander.erase(it->vecPlayerCommander.begin() + i);
+            }
+        }
+    }
 
 }
 
 
 void Screen::on_buttonDice_clicked(){
-    double factor = double(6)/8;
+    double factor = double(4)/8;
     diceWindow->resize(width() * factor, height() * factor);
     diceWindow->move(x() + (width() - diceWindow->width())/2 ,y() + (height() - diceWindow->height())/2 );
     diceWindow->setMaximumSize(width(),height());
@@ -320,7 +543,16 @@ void Screen::on_buttonReset_clicked(){
 
 
 void Screen::on_buttonSetting_clicked(){
-    double factor = double(7)/8;
+    double factor = double(4)/8;
+
+
+    QPushButton* dicebutton = settingsWindow->findChild<QPushButton*>(QString::fromStdString("dicebutton"));
+    dicebutton->setText(QString::fromStdString("Dice Value: " + std::to_string(diceWindow->maxValue)));
+
+    QPushButton* initialHP = settingsWindow->findChild<QPushButton*>(QString::fromStdString("initialHP"));
+    initialHP->setText(QString::fromStdString("Initial HP: " + std::to_string(defaultSetting->initialHp)));
+
+
     settingsWindow->resize(width() * factor, height() * factor);
     settingsWindow->move(x() + (width() - settingsWindow->width())/2 ,y() + (height() - settingsWindow->height())/2 );
     settingsWindow->setMaximumSize(width(),height());

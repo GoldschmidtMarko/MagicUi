@@ -26,6 +26,9 @@ void Settingswindow::maximizeFontSize(QObject* object){
     }else if(dynamic_cast<QLabel*>(object)){
         ((QLabel*)(object))->setMinimumSize(1,1);
         maximizeFontSizeTemplate((QLabel*)object);
+    }else if(dynamic_cast<QLineEdit*>(object)){
+        ((QLineEdit*)(object))->setMinimumSize(1,1);
+        maximizeFontSizeTemplate((QLineEdit*)object);
     }
 }
 

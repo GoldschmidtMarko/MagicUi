@@ -13,15 +13,16 @@ void PushButtonCorner::mousePressEvent(QMouseEvent *ev){
     int x = ev->position().x();
     int y = ev->position().y();
 
+
     if(type == hp){
-        if(x < height/2){
-            if(y < width/2){
+        if(x < width/2){
+            if(y < height/2){
                 p->hp += 1;
             }else{
                 p->hp -= 1;
             }
         }else{
-            if(y < width/2){
+            if(y < height/2){
                 p->hp += 5;
             }else{
                 p->hp -= 5;
@@ -30,27 +31,27 @@ void PushButtonCorner::mousePressEvent(QMouseEvent *ev){
     }else if(type == commanderDamage){
         for(auto it : p->vecPlayerCommander){
             if(it->playerName == commanderPlayerName){
-                if(x < height/2){
-                    if(y < width/2){
+                if(x < width/2){
+                    if(y < height/2){
                         it->damage += 1;
                     }else{
                         it->damage -= 1;
                     }
                 }else{
-                    if(y < width/2){
+                    if(y < height/2){
                         it->damage += 5;
                     }else{
                         it->damage -= 5;
                     }
                 }
-                if(x < height/2){
-                    if(y < width/2){
+                if(x < width/2){
+                    if(y < height/2){
                         p->hp -= 1;
                     }else{
                         p->hp += 1;
                     }
                 }else{
-                    if(y < width/2){
+                    if(y < height/2){
                         p->hp -= 5;
                     }else{
                         p->hp += 5;
@@ -61,27 +62,27 @@ void PushButtonCorner::mousePressEvent(QMouseEvent *ev){
             }
         }
     }else if(type == infect){
-        if(x < height/2){
-            if(y < width/2){
+        if(x < width/2){
+            if(y < height/2){
                 p->infectdamage += 1;
             }else{
                 p->infectdamage -= 1;
             }
         }else{
-            if(y < width/2){
+            if(y < height/2){
                 p->infectdamage += 5;
             }else{
                 p->infectdamage -= 5;
             }
         }
-        if(x < height/2){
-            if(y < width/2){
+        if(x < width/2){
+            if(y < height/2){
                 p->hp -= 1;
             }else{
                 p->hp += 1;
             }
         }else{
-            if(y < width/2){
+            if(y < height/2){
                 p->hp -= 5;
             }else{
                 p->hp += 5;

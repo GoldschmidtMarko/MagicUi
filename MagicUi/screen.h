@@ -8,6 +8,8 @@
 #include <iostream>
 #include <QMouseEvent>
 #include <QDialogButtonBox>
+#include <QLineEdit>
+#include <QSlider>
 #include "player.h"
 #include "pushbuttoncorner.h"
 #include "dicewindow.h"
@@ -15,6 +17,7 @@
 #include "resetdialog.h"
 #include "defaultsetting.h"
 #include "settingswindow.h"
+#include "editwindow.h"
 
 namespace Ui {
 class Screen;
@@ -29,6 +32,7 @@ public:
     ~Screen();
     void refreshUi();
     std::vector<Player*> vecPlayers;
+    void refreshUiPlayer(Player* p);
 
 private slots:
     void on_buttonEdit_clicked();
@@ -45,6 +49,7 @@ private:
     ResetDialog *resetDialog;
     DefaultSetting* defaultSetting;
     Settingswindow* settingsWindow;
+    Editwindow* editwindow;
 
     int timerId2 = 0;
 
@@ -52,17 +57,19 @@ private:
 
     void setupSettingWindow();
 
-    void refreshUiPlayer(Player* p);
-
     void maximizeFontSize(QObject* object);
     template <class T>
     void maximizeFontSizeTemplate(T* it);
+
+    void refreshPlayerCommander();
 
     Player* getPlayerByName(std::string name);
 
     void resizeEvent(QResizeEvent* event) override;
 
     void timerEvent(QTimerEvent *te) override;
+
+    void setupEditWindow();
 
     void resetStats();
 };

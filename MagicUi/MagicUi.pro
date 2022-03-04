@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     defaultsetting.cpp \
     dicewindow.cpp \
+    editwindow.cpp \
     main.cpp \
     mainwindow.cpp \
     player.cpp \
@@ -23,6 +24,7 @@ HEADERS += \
     Define.h \
     defaultsetting.h \
     dicewindow.h \
+    editwindow.h \
     mainwindow.h \
     player.h \
     pushbuttoncorner.h \
@@ -32,6 +34,7 @@ HEADERS += \
 
 FORMS += \
     dicewindow.ui \
+    editwindow.ui \
     mainwindow.ui \
     resetdialog.ui \
     screen.ui \

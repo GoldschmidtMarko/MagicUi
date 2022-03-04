@@ -4,23 +4,25 @@
 #include <string>
 #include <vector>
 
+class PlayerCommander{
+    public:
+        std::string playerName = "";
+        int damage = 0;
+};
+
 class Player{
-    class PlayerCommander{
-        public:
-            std::string playerName = "";
-            int damage = 0;
-    };
-
-
 public:
     Player(std::string name);
     ~Player();
     std::string name =  "";
     int hp = 40;
     int infectdamage = 0;
-    int r = 100;
-    int g = 100;
-    int b = 100;
+    int r_back = 100;
+    int g_back = 100;
+    int b_back = 100;
+    int r_font = 0;
+    int g_font = 0;
+    int b_font = 0;
 
 
     std::vector<PlayerCommander*> vecPlayerCommander;
