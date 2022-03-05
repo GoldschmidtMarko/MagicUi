@@ -213,7 +213,7 @@ void Screen::setupSettingWindow(){
     connect(addPlayer, &QPushButton::clicked, [this]() {
         QLineEdit* lineAdd = settingsWindow->findChild<QLineEdit*>(QString::fromStdString("lineAdd"));
         std::string newName = lineAdd->text().toStdString();
-        if(newName.size() > 0){
+        if(newName.size() > 0 && newName != "Error"){
             for(auto it : vecPlayers){
                 if(it->name == newName){
                     lineAdd->setText("Error");
@@ -524,9 +524,13 @@ void Screen::on_buttonDice_clicked(){
     diceWindow->show();
 
     if(buttonsPressed.size() == 0){
-        diceWindow->dice(vecPlayers.size());
+        diceWindow->dice(vecPlayers);
     }else{
-        diceWindow->dice(buttonsPressed.size());
+        std::vector<Player*> vec;
+        for(auto it : buttonsPressed){
+            vec.push_back(vecPlayers.at(it));
+        }
+        diceWindow->dice(vec);
     }
 }
 

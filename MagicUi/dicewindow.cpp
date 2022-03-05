@@ -13,25 +13,41 @@ DiceWindow::~DiceWindow()
     delete ui;
 }
 
-void DiceWindow::dice(int amountPlayer){
+void DiceWindow::dice(std::vector<Player*> vec){
     QHBoxLayout* layoutDice = this->findChild<QHBoxLayout*>(QString::fromStdString("diceLayout"));
     if(layoutDice != nullptr){
         QLayoutItem* item;
         while( (item = layoutDice->takeAt(0)) != nullptr ){
+            if(dynamic_cast<QVBoxLayout*>(item) != nullptr){
+                QLayoutItem* item2;
+                while( (item2 = ((QVBoxLayout*)item)->takeAt(0)) != nullptr ){
+                    delete item2->widget();
+                    delete item2;
+                }
+            }
             delete item->widget();
             delete item;
         }
     }
     std::vector<int> values;
     int max = 1;
-    for(int i = 0; i < amountPlayer; ++i){
+    for(int i = 0; i < (int)vec.size(); ++i){
         int r = rand() % maxValue + 1;
         if(r > max){
             max = r;
         }
         values.push_back(r);
     }
-    for(int i = 0; i < amountPlayer; ++i){
+    for(int i = 0; i < (int)vec.size(); ++i){
+        QVBoxLayout* layout = new QVBoxLayout();
+        layoutDice->addLayout(layout);
+
+        QLabel* lName = new QLabel(this);
+        lName->setText(QString::fromStdString(vec.at(i)->name));
+        lName->setMinimumSize(1,1);
+        lName->setAlignment(Qt::AlignCenter);
+        layout->addWidget(lName,1);
+
         QLabel* l= new QLabel(this);
         l->setText(QString::fromStdString(std::to_string(values.at(i))));
         l->setMinimumSize(1,1);
@@ -39,7 +55,8 @@ void DiceWindow::dice(int amountPlayer){
         if(values.at(i) == max){
             l->setStyleSheet(COLOR_LIGHTBLUE);
         }
-        layoutDice->addWidget(l);
+        layout->addWidget(l,3);
+
     }
     timerId = startTimer(1);
 }

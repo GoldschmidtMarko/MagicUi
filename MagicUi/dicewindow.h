@@ -8,6 +8,7 @@
 #include <stdlib.h>
 
 #include "Define.h"
+#include "player.h"
 
 namespace Ui {
 class DiceWindow;
@@ -20,7 +21,7 @@ class DiceWindow : public QWidget
 public:
     explicit DiceWindow(QWidget *parent = nullptr);
     ~DiceWindow();
-    void dice(int amountPlayer);
+    void dice(std::vector<Player*> vec);
     int maxValue = 6;
 
 private:
