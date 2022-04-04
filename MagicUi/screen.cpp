@@ -361,7 +361,7 @@ void Screen::refreshUiPlayer(Player* p){
 
     playerName->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     playerName->setText(QString::fromStdString(p->name));
-    layout->addWidget(playerName);
+    layout->addWidget(playerName,3);
 
     QPushButton* playerHp = new PushButtonCorner(this,p,ButtonType::hp,"");
     playerHp->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
@@ -369,8 +369,7 @@ void Screen::refreshUiPlayer(Player* p){
     playerHp->setStyleSheet(QString::fromStdString(p->getBackgroundColor()));
     playerHp->setObjectName(QString::fromStdString("buttonHP_" + p->name));
 
-    layout->addWidget(playerHp);
-
+    layout->addWidget(playerHp,3);
 
     if(defaultSetting->commanderDamage == true){
         QLabel* titel = new QLabel(this);
@@ -378,14 +377,14 @@ void Screen::refreshUiPlayer(Player* p){
         titel->setText(QString::fromStdString("CommanderDamage"));
         titel->setStyleSheet(QString::fromStdString(p->getBackgroundColor()));
         titel->setAlignment(Qt::AlignCenter);
-        layout->addWidget(titel);
+        layout->addWidget(titel,1);
 
         for(auto it : p->vecPlayerCommander){
             QPushButton* playerCommanderDamage = new PushButtonCorner(this,p,ButtonType::commanderDamage,it->playerName);
             playerCommanderDamage->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
             playerCommanderDamage->setText(QString::fromStdString(it->playerName + ": " + std::to_string(it->damage)));
             playerCommanderDamage->setStyleSheet(QString::fromStdString(p->getBackgroundColor()));
-            layout->addWidget(playerCommanderDamage);
+            layout->addWidget(playerCommanderDamage,3);
         }
     }
 
@@ -394,9 +393,8 @@ void Screen::refreshUiPlayer(Player* p){
         playerInfectDamage->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         playerInfectDamage->setText(QString::fromStdString("Infect: " + std::to_string(p->infectdamage)));
         playerInfectDamage->setStyleSheet(QString::fromStdString(p->getBackgroundColor()));
-        layout->addWidget(playerInfectDamage);
+        layout->addWidget(playerInfectDamage,3);
     }
-
 
 }
 
