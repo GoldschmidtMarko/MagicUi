@@ -17,6 +17,8 @@ Screen::Screen(QWidget *parent) :
 
     editwindow = new Editwindow();
 
+    score = new Score();
+
     setupSettingWindow();
 
     setupEditWindow();
@@ -59,6 +61,7 @@ Screen::~Screen(){
     delete resetDialog;
     delete defaultSetting;
     delete settingsWindow;
+    delete score;
 
     for(auto it : vecPlayers){
         delete(it);
@@ -242,7 +245,9 @@ void Screen::setupSettingWindow(){
                     if(layout != nullptr){
                         QLayoutItem* item;
                         while( (item = layout->takeAt(0)) != nullptr ){
-                            delete item->widget();
+                            if(item->widget() != nullptr){
+                                delete item->widget();
+                            }
                             delete item;
                         }
                         delete layout;
@@ -313,7 +318,9 @@ void Screen::refreshUiPlayer(Player* p){
     if(layout != nullptr){
         QLayoutItem* item;
         while( (item = layout->takeAt(0)) != nullptr ){
-            delete item->widget();
+            if(item->widget() != nullptr){
+                delete item->widget();
+            }
             delete item;
         }
         delete layout;
@@ -472,7 +479,6 @@ void Screen::on_buttonEdit_clicked(){
     for(auto it : buttonsPressed){
         editwindow->vecPlayers.push_back(vecPlayers.at(it));
     }
-
     editwindow->show();
 
 }
@@ -556,9 +562,19 @@ void Screen::on_buttonSetting_clicked(){
 
 
     settingsWindow->resize(width() * factor, height() * factor);
-    settingsWindow->move(x() + (width() - settingsWindow->width())/2 ,y() + (height() - settingsWindow->height())/2 );
+    settingsWindow->move(x() + (width() - settingsWindow->width())/2,y() + (height() - settingsWindow->height())/2 );
     settingsWindow->setMaximumSize(width(),height());
     settingsWindow->show();
     settingsWindow->refreshUi();
+}
+
+
+void Screen::on_buttonScore_clicked(){
+    double factor = double(7)/8;
+    score->resize(width() * factor, height() * factor);
+    score->move(x() + (width() - score->width())/2 ,y() + (height() - score->height())/2 );
+    score->setMaximumSize(width(),height());
+    score->updatePlayers(vecPlayers);
+    score->show();
 }
 

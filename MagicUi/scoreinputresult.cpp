@@ -1,23 +1,46 @@
-#include "dicewindow.h"
-#include "ui_dicewindow.h"
+#include "scoreinputresult.h"
+#include "ui_scoreinputresult.h"
 
-DiceWindow::DiceWindow(QWidget *parent) :
+ScoreInputResult::ScoreInputResult(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::DiceWindow)
+    ui(new Ui::ScoreInputResult)
 {
     ui->setupUi(this);
 }
 
-DiceWindow::~DiceWindow()
+ScoreInputResult::~ScoreInputResult()
 {
     delete ui;
 }
 
-void DiceWindow::dice(std::vector<Player*> vec){
-    QHBoxLayout* layoutDice = this->findChild<QHBoxLayout*>(QString::fromStdString("diceLayout"));
-    if(layoutDice != nullptr){
+void ScoreInputResult::resizeEvent(QResizeEvent* event){
+    if (timerId){
+        killTimer(timerId);
+        timerId = 0;
+    }
+    timerId = startTimer(200);
+}
+
+
+
+void ScoreInputResult::timerEvent(QTimerEvent *te){
+    refreshUi();
+    killTimer(te->timerId());
+    timerId = 0;
+}
+
+
+void ScoreInputResult::refreshUi(){
+    for(auto it : children()){
+        maximizeFontSize(it);
+    }
+}
+
+void ScoreInputResult::updateLabelUi(std::vector<std::string> vec){
+    QHBoxLayout* layoutResult = this->findChild<QHBoxLayout*>(QString::fromStdString("layout"));
+    if(layoutResult != nullptr){
         QLayoutItem* item;
-        while( (item = layoutDice->takeAt(0)) != nullptr ){
+        while( (item = layoutResult->takeAt(0)) != nullptr ){
             if(dynamic_cast<QVBoxLayout*>(item) != nullptr){
                 QLayoutItem* item2;
                 while( (item2 = ((QVBoxLayout*)item)->takeAt(0)) != nullptr ){
@@ -32,70 +55,45 @@ void DiceWindow::dice(std::vector<Player*> vec){
             }
             delete item;
         }
-    }
-    std::vector<int> values;
-    int max = 1;
-    for(int i = 0; i < (int)vec.size(); ++i){
-        int r = rand() % maxValue + 1;
-        if(r > max){
-            max = r;
+
+
+        for(auto it : vec){
+            QVBoxLayout* hLayout = new QVBoxLayout();
+            layoutResult->addLayout(hLayout);
+            QLabel* lName = new QLabel(this);
+            lName->setText(QString::fromStdString(it));
+            lName->setMinimumSize(1,1);
+            lName->setAlignment(Qt::AlignCenter);
+            hLayout->addWidget(lName,1);
+
+            QLineEdit* l= new QLineEdit(this);
+            l->setObjectName(QString::fromStdString("l"+it));
+            l->setMinimumSize(1,1);
+            l->setAlignment(Qt::AlignCenter);
+            l->setText("0");
+            l->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
+            hLayout->addWidget(l,1);
         }
-        values.push_back(r);
-    }
-    for(int i = 0; i < (int)vec.size(); ++i){
-        QVBoxLayout* layout = new QVBoxLayout();
-        layoutDice->addLayout(layout);
-
-        QLabel* lName = new QLabel(this);
-        lName->setText(QString::fromStdString(vec.at(i)->name));
-        lName->setMinimumSize(1,1);
-        lName->setAlignment(Qt::AlignCenter);
-        layout->addWidget(lName,1);
-
-        QLabel* l= new QLabel(this);
-        l->setText(QString::fromStdString(std::to_string(values.at(i))));
-        l->setMinimumSize(1,1);
-        l->setAlignment(Qt::AlignCenter);
-        if(values.at(i) == max){
-            l->setStyleSheet(COLOR_LIGHTBLUE);
-        }
-        layout->addWidget(l,3);
 
     }
-    timerId = startTimer(1);
+
 }
 
-void DiceWindow::resizeEvent(QResizeEvent* event){
-
-    if (timerId){
-        killTimer(timerId);
-        timerId = 0;
-    }
-    timerId = startTimer(200);
-}
-
-void DiceWindow::timerEvent(QTimerEvent *te){
-    auto childs = children();
-    for(auto it : childs){
-        maximizeFontSize(it);
-    }
-    killTimer(te->timerId());
-    timerId = 0;
-}
-
-
-void DiceWindow::maximizeFontSize(QObject* object){
+void ScoreInputResult::maximizeFontSize(QObject* object){
     if(dynamic_cast<QPushButton*>(object)){
         ((QPushButton*)(object))->setMinimumSize(1,1);
         maximizeFontSizeTemplate((QPushButton*)object);
     }else if(dynamic_cast<QLabel*>(object)){
         ((QLabel*)(object))->setMinimumSize(1,1);
         maximizeFontSizeTemplate((QLabel*)object);
+    }else if(dynamic_cast<QLineEdit*>(object)){
+        ((QLineEdit*)(object))->setMinimumSize(1,1);
+        maximizeFontSizeTemplate((QLineEdit*)object);
     }
 }
 
 template <class T>
-void DiceWindow::maximizeFontSizeTemplate(T* it){
+void ScoreInputResult::maximizeFontSizeTemplate(T* it){
 
     QString string = it->text();
     QFont f("Arial",1);

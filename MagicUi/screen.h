@@ -10,6 +10,8 @@
 #include <QDialogButtonBox>
 #include <QLineEdit>
 #include <QSlider>
+
+#include "scorewindow.h"
 #include "player.h"
 #include "pushbuttoncorner.h"
 #include "dicewindow.h"
@@ -43,6 +45,8 @@ private slots:
 
     void on_buttonSetting_clicked();
 
+    void on_buttonScore_clicked();
+
 private:
     Ui::Screen *ui;
     DiceWindow *diceWindow;
@@ -50,6 +54,7 @@ private:
     DefaultSetting* defaultSetting;
     Settingswindow* settingsWindow;
     Editwindow* editwindow;
+    Score* score;
 
     int timerId2 = 0;
 

@@ -17,6 +17,8 @@ SOURCES += \
     player.cpp \
     pushbuttoncorner.cpp \
     resetdialog.cpp \
+    scoreinputresult.cpp \
+    scorewindow.cpp \
     screen.cpp \
     settingswindow.cpp
 
@@ -29,6 +31,8 @@ HEADERS += \
     player.h \
     pushbuttoncorner.h \
     resetdialog.h \
+    scoreinputresult.h \
+    scorewindow.h \
     screen.h \
     settingswindow.h
 
@@ -37,6 +41,8 @@ FORMS += \
     editwindow.ui \
     mainwindow.ui \
     resetdialog.ui \
+    scoreinputresult.ui \
+    scorewindow.ui \
     screen.ui \
     settingswindow.ui
 
